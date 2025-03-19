@@ -202,7 +202,7 @@ struct StudentManager
                 {
                     case 1:
                     {
-                        for (int i = 0; i < this->counter - 1; ++i)
+                        for (int i = 0; i < this->counter; ++i)
                         {
                             for (int j = 0; j < this->counter - i - 1; ++j)
                             {
@@ -221,7 +221,7 @@ struct StudentManager
                     }
                     case 2:
                     {
-                        for (int i = 0; i < this->counter - 1; ++i)
+                        for (int i = 0; i < this->counter; ++i)
                         {
                             for (int j = 0; j < this->counter - i - 1; ++j)
                             {
@@ -252,6 +252,15 @@ struct StudentManager
         {
             std::cout << "Student record is empty." << '\n';
         }
+    }
+
+    bool checkIfIDisValid(int studentID)
+    {
+        if (studentID > 0)
+        {
+            return true;
+        }
+        return false;
     }
 
     //FOR TESTING
@@ -314,7 +323,13 @@ void drawMenu()
 
                 while (true)
                 {
-                    if (manager.foundORDupp(studentID))
+                    if (!manager.checkIfIDisValid(studentID))
+                    {
+                        std::cout << "Student ID cannot be negative number!" << '\n';
+                        std::cout << "Enter a different student ID: ";
+                        std::cin >> studentID;
+                    }
+                    else if (manager.foundORDupp(studentID))
                     {
                         std::cout << "Student ID already exist!" << '\n';
                         std::cout << "Enter a different student ID: ";
