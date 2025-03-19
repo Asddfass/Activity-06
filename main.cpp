@@ -187,58 +187,67 @@ struct StudentManager
     {
         if (this->counter > 0)
         {
-            std::cout << "-Viewing Option-" << '\n';
-            std::cout << "[1] Alphabetically" << '\n';
-            std::cout << "[2] GPA" << '\n';
-            std::cout << "Choose Option: ";
-            int opt = 0;
-            std::cin >> opt;
-            std::cin.ignore();
-
-            switch (opt)
+            bool running = true;
+            while (running)
             {
-                case 1:
+                std::cout << "-Viewing Option-" << '\n';
+                std::cout << "[1] Alphabetically" << '\n';
+                std::cout << "[2] GPA" << '\n';
+                std::cout << "Choose Option: ";
+                int opt = 0;
+                std::cin >> opt;
+                std::cin.ignore();
+
+                switch (opt)
                 {
-                    for (int i = 0; i < this->counter - 1; ++i)
+                    case 1:
                     {
-                        for (int j = 0; j < this->counter - i - 1; ++j)
+                        for (int i = 0; i < this->counter - 1; ++i)
                         {
-                            if (students[j].getLName() > students[j + 1].getLName())
+                            for (int j = 0; j < this->counter - i - 1; ++j)
                             {
-                                Student temp = students[j];
-                                students[j] = students[j + 1];
-                                students[j + 1] = temp;
+                                if (students[j].getLName() > students[j + 1].getLName())
+                                {
+                                    Student temp = students[j];
+                                    students[j] = students[j + 1];
+                                    students[j + 1] = temp;
+                                }
                             }
                         }
-                    }
 
-                    printStudent();
-                    break;
-                }
-                case 2:
-                {
-                    for (int i = 0; i < this->counter - 1; ++i)
+                        printStudent();
+                        running = false;
+                        break;
+                    }
+                    case 2:
                     {
-                        for (int j = 0; j < this->counter - i - 1; ++j)
+                        for (int i = 0; i < this->counter - 1; ++i)
                         {
-                            if (students[j].getGpa() > students[j + 1].getGpa())
+                            for (int j = 0; j < this->counter - i - 1; ++j)
                             {
-                                Student temp = students[j];
-                                students[j] = students[j + 1];
-                                students[j + 1] = temp;
+                                if (students[j].getGpa() > students[j + 1].getGpa())
+                                {
+                                    Student temp = students[j];
+                                    students[j] = students[j + 1];
+                                    students[j + 1] = temp;
+                                }
                             }
                         }
+                        printStudent();
+                        running = false;
+                        break;
                     }
-                    printStudent();
-                    break;
-                }
 
-                default:
-                {
-                    break;
+                    default:
+                    {
+                        std::cout << "Invalid input!" << '\n';
+                        break;
+                    }
                 }
             }
+            
         }
+        
         else
         {
             std::cout << "Student record is empty." << '\n';
