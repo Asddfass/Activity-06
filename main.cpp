@@ -73,6 +73,10 @@ struct StudentManager
         students[this->counter].setStudentID(studentID);
         students[this->counter].setFName(fName);
         students[this->counter].setLName(lName);
+        for (int i = 0; i < course.size(); ++i)
+        {
+            course[i] = toupper(course[i]);
+        }
         students[this->counter].setCourse(course);
         students[this->counter].setGpa(gpa);
         counter++;
@@ -149,7 +153,7 @@ struct StudentManager
         }
         else
         {
-            std::cout << "Student record is empty." << '\n';
+            std::cout << "STUDENT RECORD IS EMPTY!!!" << '\n';
             return false;
         }
     }
@@ -185,7 +189,7 @@ struct StudentManager
 
     void viewStudentSortMenu()
     {
-        if (this->counter > 0)
+        if (notEmpty())
         {
             bool running = true;
             while (running)
@@ -194,13 +198,13 @@ struct StudentManager
                 std::cout << "[1] Alphabetically" << '\n';
                 std::cout << "[2] GPA" << '\n';
                 std::cout << "Choose Option: ";
-                int opt = 0;
+                char opt = ' ';
                 std::cin >> opt;
                 std::cin.ignore();
 
                 switch (opt)
                 {
-                    case 1:
+                    case '1':
                     {
                         for (int i = 0; i < this->counter; ++i)
                         {
@@ -219,7 +223,7 @@ struct StudentManager
                         running = false;
                         break;
                     }
-                    case 2:
+                    case '2':
                     {
                         for (int i = 0; i < this->counter; ++i)
                         {
@@ -248,10 +252,7 @@ struct StudentManager
             
         }
         
-        else
-        {
-            std::cout << "Student record is empty." << '\n';
-        }
+        else {}
     }
 
     bool checkIfIDisValid(int studentID)
@@ -291,13 +292,13 @@ void drawMenu()
         std::cout << "[4] View Student" << '\n';
         std::cout << "[5] Exit Program" << '\n';
         std::cout << "Enter option: ";
-        int opt = 0;
+        char opt = ' ';
         std::cin >> opt;
         std::cin.ignore();
         
         switch (opt)
         {
-            case 1:
+            case '1':
             {
                 system("cls");
                 int studentID;
@@ -344,7 +345,7 @@ void drawMenu()
                 }
                 break;
             }
-            case 2:
+            case '2':
             {
                 system("cls");
                 if (manager.notEmpty())
@@ -401,7 +402,7 @@ void drawMenu()
                 else {}
                 break;
             }
-            case 3:
+            case '3':
             {
                 system("cls");
                 if (manager.notEmpty())
@@ -414,10 +415,32 @@ void drawMenu()
                     if (manager.foundORDupp(studentID))
                     {
                         manager.displayStudent(studentID);
+                        std::cout << '\n' << "Are you sure you want to delete this student?" << '\n';
+                        while (true)
+                        {
+                            std::cout << '\n' << "Enter option (y/n): ";
+                            char opt = ' ';
+                            std::cin >> opt;
+                            if (tolower(opt) == 'y')
+                            {
 
-                        manager.deleteStudent(studentID);
-
-                        std::cout << "Successfully Deleted!" << '\n';
+                                manager.deleteStudent(studentID);
+                                std::cout << "Successfully Deleted!" << '\n';
+                                break;
+                            }
+                            else if (tolower(opt) == 'n')
+                            {
+                                std::cout << "Delete Canceled!" << '\n';
+                                break;
+                            }
+                            else
+                            {
+                                std::cout << "Invalid Option!" << '\n';
+                                std::cout << "Try again!" << '\n';
+                            }
+                        }
+                        
+                        
                     }
                     else
                     {
@@ -427,13 +450,13 @@ void drawMenu()
                 else {}
                 break;
             }
-            case 4:
+            case '4':
             {
                 system("cls");
                 manager.viewStudentSortMenu();
                 break;
             }
-            case 5:
+            case '5':
             {
                 running = false;
                 std::cout << "Thank you for using the program :)." << '\n';
